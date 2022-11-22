@@ -3,7 +3,9 @@ import {
   AppRegistry,
   asset,
   Box,
+  Cylinder,
   Pano,
+  Sphere,
   Text,
   View,
   VrButton,
@@ -41,20 +43,21 @@ export default class WelcomeToVR extends React.Component {
       <View>
         <Pano source={asset("env.jpg")}/>
         {/* <VrButton onClick={() => this.start()}> */}
-        <Box
-        dimWidth={0.35}
-        dimHeight={0.35}
-        dimDepth={0.35}
+        <Cylinder
+        radiusTop={0.2}
+        radiusBottom={0.2}
+        dimHeight={0.3}
+        segments={90}
         // wireframe={true}
 
         texture={asset("chess-world.jpg")}
           style={{
             color:'white',
-            transform:[{translate:[0,0,-2]},{rotateX:45},{rotateY:50},{scale:[2,0.7,1.5]}]
+            transform:[{translate:[0.75,0,-2]},{rotateY:45},{rotateX:45}]
 
           }}>
          
-        </Box>
+        </Cylinder>
         {/* </VrButton> */}
       </View>
     );
