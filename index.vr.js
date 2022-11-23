@@ -12,53 +12,44 @@ import {
 } from 'react-vr';
 
 export default class WelcomeToVR extends React.Component {
-
-  // constructor(props){
-  //   super(props);
-  //   this.state=
-  //   {
-  //     Txt:"Hello World",
-  //     imgSrc:"chess-world.jpg"
-  //   };
-  //   this.i=0
-  // }
-  // start(){
-  //   if(this.i % 2 ==0){
-  //     this.setState({
-  //       Txt:"State1",
-  //       imgSrc:"chess-world.jpg"
-  //   }) 
-  // }
-  // else {
-  //   this.setState({
-  //     Txt:"state2",
-  //     imgSrc:"env.jpg"
-  //   })
-  // }
-  // this.i++;
-  // }
+constructor(){
+  super();
+  this.state={buttonText:"Default Button"};
+}
+  triggerEnter(){
+    this.setState({buttonText:"Mouse Enter"})
+  }
+  triggerExit(){
+    this.setState({buttonText:"Mouse Exit"})
+  }
+  triggerClick(){
+    this.setState({buttonText:"Mouse click"})
+  }
+  triggerLongClick(){
+    this.setState({buttonText:"come on byr byr now"})
+  }
 
   render() {
     return (
       <View>
         <Pano source={asset("env.jpg")}/>
-        {/* <VrButton onClick={() => this.start()}> */}
-        <Cylinder
-        radiusTop={0.2}
-        radiusBottom={0.2}
-        dimHeight={0.3}
-        segments={90}
-        // wireframe={true}
+        <VrButton 
+        onEnter={this.triggerEnter.bind(this)}
+        onExit={this.triggerExit.bind(this)}
+        onClick={this.triggerClick.bind(this)}
+        onLongClick={this.triggerLongClick.bind(this)}
+        > 
+      <Text
+      style={{
+        fontSize:0.3,
+        textAlign:"center",
+        backgroundColor:"red",
 
-        texture={asset("chess-world.jpg")}
-          style={{
-            color:'white',
-            transform:[{translate:[0.75,0,-2]},{rotateY:45},{rotateX:45}]
-
-          }}>
-         
-        </Cylinder>
-        {/* </VrButton> */}
+        transform:[{translate:[-1,0,-3]}]
+      }}>
+        {this.state.buttonText}
+      </Text>
+         </VrButton>
       </View>
     );
   }
