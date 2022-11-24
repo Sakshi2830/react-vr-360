@@ -1,74 +1,62 @@
 import React from 'react';
-import {  AppRegistry,  asset,  Pano,  Text,  View,  VrButton,  Box,  Cylinder,  Sphere,  Animated,} from 'react-vr';
+import {  AppRegistry,  asset,  Pano,  Text,  View,   Sphere,  Animated, Model,PointLight} from 'react-vr';
 import { Easing } from 'react-native';
 
 
 export default class animation extends React.Component
  {
   
-  constructor() {
+  constructor()
+  {
     super();
     this.state = {
-      rotateImage: new Animated.Value(0)
+      animateValue: new Animated.Value(0)
     };
-   }
- 
-  componentDidMount() {
-     Animated.timing(
-       this.state.rotateImage,
-       {
-         toValue: 3600,
-         duration: 5000,
-         delay: 0,
-        //  easing: Easing.bounce,
-        //  easing: Easing.ease,
-        //  easing: Easing.linear,
-        //  easing: Easing.elastic(50),
-        //  easing: Easing.back(5),
-       }
-     ).start();
-   }
- 
-handleDecay(){
-  Animated.decay(
-   this.state.rotateImage,{
-    velocity:0.2,
-    deceleration:0.999
-   }
-  ).start();
-}
+  }
 
+  componentDidMount(){
+    this.rotate();
+  }
+
+  rotate(){
+      this.state.animateValue.setValue(0);
+      Animated.timing(
+        this.state.animateValue,
+        {
+          toValue: 360,
+          duration: 2500,
+          easing: Easing.linear,
+        }
+
+    ).start(() => this.rotate());
+  }
+
+ 
+  
    render() {
+    const AnimatedModel = Animated.createAnimatedComponent(Model)
      return (
          <View>
            <Pano source={asset('chess-world.jpg')}/>
-           <Animated.Image
-             style={{
-               width:0.5,
-               height:0.5,
-               layoutOrigin:[0.5,0.1],
-               transform: [
-                 {translate: [0,0,-2]},
-                 {rotateX:this.state.rotateImage}
-                 
-               ]
-             }}source={asset('R.png')}>
-            
-           </Animated.Image>
-
-           <VrButton billboarding={'on'}
+           <PointLight style={{color:"white", transform:[{translate:[0,0,0]}]}}/>
+           <AnimatedModel 
+           source={{
+            obj:asset('boy.obj'),mtl:asset('boy.mtl')
+           }}
+           lit
            style={{
-            backgroundColor:'grey',
             transform:[
-              {translate:[-0.4,-0.3,-2]}
+              {translate:[0,-8,-25]},
+              {scale:[1,1,1]},
+              {rotateY:this.state.animateValue}
             ]
            }}
-
-           onClick={this.handleDecay.bind(this)}
-           >
-            <Text>Stop it</Text>
-            </VrButton>
+           />
+          
          </View>
      );
    }
  };AppRegistry.registerComponent('WelcomeToVR', () => animation);
+
+
+ 
