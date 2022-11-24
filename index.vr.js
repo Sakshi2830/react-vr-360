@@ -1,5 +1,5 @@
 import React from 'react';
-import {  AppRegistry,  asset,  Pano,  Text,  View,   Sphere,  Animated, Model,PointLight} from 'react-vr';
+import {  AppRegistry,  asset,  Pano,  View,  Animated, Model,PointLight, DirectionalLight, SpotLight} from 'react-vr';
 import { Easing } from 'react-native';
 
 
@@ -28,7 +28,7 @@ export default class animation extends React.Component
           easing: Easing.linear,
         }
 
-    ).start(() => this.rotate());
+    ).start();
   }
 
  
@@ -37,8 +37,12 @@ export default class animation extends React.Component
     const AnimatedModel = Animated.createAnimatedComponent(Model)
      return (
          <View>
-           <Pano source={asset('chess-world.jpg')}/>
-           <PointLight style={{color:"white", transform:[{translate:[0,0,0]}]}}/>
+           <Pano source={asset('lobby.jpeg')}/>
+           <PointLight style={{color:"grey", transform:[{translate:[0,0,0]}]}}/>
+           <SpotLight angle={30} style={{
+            color:"black", transform:[{translate:[0,0,0]},{rotateX:90}]
+           }}/>
+           <DirectionalLight style={{color:"white", transform:[{rotateX: 90},{rotateY:45},{rotateZ:90}]}}/>
            <AnimatedModel 
            source={{
             obj:asset('boy.obj'),mtl:asset('boy.mtl')
